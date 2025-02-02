@@ -93,23 +93,29 @@ const createRow = (task) => {
     const deleteButton = createElement('button', '', '<span class="material-symbols-outlined">delete</span>');
 
     const editForm = createElement('form');
-    const editInput = createElement('input');
-
-    
+    const editInput = createElement('input');    
 
     editInput.value = title;
 
     editForm.appendChild(editInput);
 
-    editForm.addEventListener('submit', (event) => {
+    const saveEdit = (event) => {
         event.preventDefault();
+        tdTitle.innerText = editInput.value;
         updateTask({ id, title: editInput.value, status });
-    });
+    }
 
-    editButton.addEventListener('click', () => {
+    editForm.addEventListener('submit', saveEdit);
+
+    const showEditForm = () => {
         tdTitle.innerText = '';
         tdTitle.appendChild(editForm);
-    });
+        editInput.focus();
+    }
+
+    editButton.addEventListener('click', showEditForm);
+
+    tdTitle.addEventListener('click', showEditForm);
     
     editButton.classList.add('btn-action');
     deleteButton.classList.add('btn-action');
